@@ -1,0 +1,4 @@
+# Don't even try merging some XML files:
+*.pbxproj -merge
+*.xib -merge
+designable.nib -merge
