@@ -25,7 +25,9 @@ SixtyFourSwitcher will run under Mac OS X 10.4 ("Tiger") or 10.5 ("Leopard"), bu
 \
 SixtyFourSwitcher will not run on PowerPC-based Macs at all, since it would serve no function on PPC-based Macs. Apple has never shipped a 64-bit kernel for PowerPC Macs, and most likely never will.\
 \
-SixtyFourSwitcher is free software; source code is available.\
+SixtyFourSwitcher is free software. You'll always be able to find the latest version at the SixtyFourSwitcher home page:\
+\
+Source code is available at:\
 \
 \
 \ul How to install\ulnone \
@@ -51,10 +53,10 @@ As with other preference panes, you'll also probably need to unlock the pane at 
 \
 If the option to choose the 64-bit kernel is not available, then that means that either:\
 \pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\ql\qnatural\pardirnatural
-\ls3\ilvl0\cf0 {\listtext	1)	}You are using Tiger or Leopard, neither of which shipped with a 64-bit kernel. Sorry, but you need to upgrade to Snow Leopard.\
+\ls3\ilvl0\cf0 {\listtext	1)	}You are using Tiger or Leopard, neither of which shipped with a 64-bit kernel. Sorry, but you need to upgrade to Snow Leopard if that is the case.\
 {\listtext	2)	}You are using a Mac with a 32-bit-only CPU. Your Mac must support 64-bit addressing in order to boot the 64-bit kernel. The Intel Core Solo and original Core Duo, which shipped with early Intel iMacs, Mac minis, and MacBooks, did not support 64-bit addressing.\
 {\listtext	3)	}You used a third-party utility (probably Monolingual) to remove the 64-bit version of the kernel. In this case, you must re-install the OS before you can use the 64-bit kernel.\
-\ls3\ilvl0{\listtext	4)	}Apple switched off of the Intel CPU architecture to some other architecture, and SixtyFourSwitcher has not yet been updated to support this new CPU architecture. (It could happen, but it doesn't seem very likely.)\
+{\listtext	4)	}Apple switched off of the Intel CPU architecture to some other architecture, and SixtyFourSwitcher has not yet been updated to support this new CPU architecture. (It could happen, but it doesn't seem very likely.)\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 \cf0 \
 If the option to choose the 32-bit kernel is not available, then you probably stripped it out using a third-party utility. Again, you'll have to reinstall if this is the case. It might not appear as well if you're using a version of Mac OS X newer than Snow Leopard, and Apple removed the 32-bit kernel from the OS.\
@@ -66,7 +68,7 @@ SMALL WARNING: If you are one of the very, very few Mac users that supplies extr
 \
 \ul Why use a 64-bit kernel?\ulnone \
 \
-Because it's faster. The 64-bit kernel significantly improves I/O across the board, because the kernel can hold much larger caches without running into the 4 GB VRAM limit of 32-bit processes. It also supports addressing large amounts of GPU RAM, and several other things. In addition, the AMD/Intel 64-bit CPU architecture contains a number of performance improvements over the older 32-bit CPU architecture that will make the kernel run slightly faster internally.\
+Because it's faster. The 64-bit kernel significantly improves I/O across the board, because the kernel can hold much larger caches without running into the 4 GB VRAM limit of 32-bit processes. It also supports addressing large amounts of video RAM, and several other things. In addition, the AMD/Intel 64-bit CPU architecture contains a number of performance improvements over the older 32-bit CPU architecture that will make the kernel run slightly faster internally.\
 \
 Note that not all 64-bit architectures are faster. Nintendo's Nintendo 64 game console, for example, shipped with a 64-bit CPU, but almost all software for the console ran in 32-bit mode for performance reasons. The AMD/Intel 64-bit architecture is something of an anomaly here; if you want more details, then read the "AMD64" article on Wikipedia.\
 \
@@ -94,6 +96,15 @@ In Activity Monitor, set the window to show all processes, then look for the pro
 \ul Does going 64-bit inhibit my computer's ability to boot into other 32-bit kernels (Leopard, Windows XP, etc.)?\ulnone \
 \
 No; the setting is only honored by Snow Leopard & later. In other words, if you set Snow Leopard to boot the 64-bit kernel, and you go back to Leopard for some reason, then Leopard will boot normally.\
+\
+\
+\ul What's with the icon?\ulnone \
+\
+Yes, I intentionally chose to go with a retro icon. The icon is a tribute to Connectix's MODE32 system extension.\
+\
+For those of you who weren't Mac users back when Mac OS 7 came out in 1991, Mac OS 7 added support for 32-bit addressing, but Apple shipped several 32-bit computers that couldn't use it because of design flaws. MODE32 was an ingenious system extension that worked around those flaws.\
+\
+SixtyFourSwitcher doesn't correct any design flaws, but it does allow you to get the most out of Snow Leopard's 64-bit addressing feature.\
 \
 \
 \ul Hey! Want to do a localization?\ulnone \
