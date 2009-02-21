@@ -41,13 +41,15 @@ Just double-click on the preference pane "SixtyFourSwitcher.prefPane" in the dis
 \ls2\ilvl0\cf0 {\listtext	1)	}In the Finder, choose "Go to folder" in the Go menu.\
 {\listtext	2)	}Type "~/Library/PreferencePanes" if you originally chose to install the preference pane for yourself, or "/Library/PreferencePanes" if you chose to install it for everyone.\
 {\listtext	3)	}Drag the preference pane "SixtyFourSwitcher.prefPane" to the trash.\
-{\listtext	4)	}Although SixtyFourSwitcher does not save any preferences file to your disk, it does change your computer's NVRAM. To reset the values in the NVRAM back to their default values, you need to restart your Mac and press and hold Command-Option-P-R after the screen goes dark and the boot sound plays. Release those keys after you see/hear it restart a second time.\
+{\listtext	4)	}Although SixtyFourSwitcher does not save any preferences file to your disk, it does change your computer's NVRAM. To reset the values in the NVRAM back to their default values, you need to restart your Mac and press and hold Command-Option-P-R after the screen goes dark and the boot sound plays. Release those keys after you see/hear it restart a second time. (If you never actually changed the kernel, then you can skip this step.)\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 \cf0 \
 \
 \ul How to use\ulnone \
 \
 When you first enter the preference pane, you should see a radio button allowing you to switch the kernel that is used on startup. By default, the selected kernel will be the one you are currently using, or will use after restarting.\
+\
+If you are using a Mac Pro or Xserve, then by Apple's default, your Mac will boot using the 64-bit kernel. All other Macs, and presumably Hackintoshes, will boot using the 32-bit kernel by default. With SixtyFourSwitcher, you can override the default and use the kernel of your choice.\
 \
 As with other preference panes, you'll also probably need to unlock the pane at startup using an administrator password. You do this the same way you do it in every other preference pane.\
 \

@@ -1,9 +1,9 @@
 //
 //  WhenIm64Pref.h
-//  WhenIm64
+//  SixtyFourSwitcher
 //
 //  Created by Nick Zitzmann on 1/10/09.
-//  Copyright (c) 2009 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2009 Nick Zitzmann. All rights reserved.
 //
 
 #import <PreferencePanes/PreferencePanes.h>
