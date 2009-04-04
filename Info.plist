@@ -24,6 +24,8 @@
 	<string>1.0</string>
 	<key>NSMainNibFile</key>
 	<string>WhenIm64Pref</string>
+	<key>NSSupportsSuddenTermination</key>
+	<true/>
 	<key>NSPrefPaneIconFile</key>
 	<string>WhenIm64Pref.tiff</string>
 	<key>NSPrefPaneIconLabel</key>

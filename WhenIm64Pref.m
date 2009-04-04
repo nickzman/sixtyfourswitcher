@@ -61,6 +61,9 @@
 
 - (IBAction)switchCPUArchitecture:(id)sender
 {
+	if ([[NSProcessInfo processInfo] respondsToSelector:@selector(disableSuddenTermination)])	// in the extremely unlikely event that the user wants to log out and switch architectures at the same time, then don't allow that, since that would be bad
+		[[NSProcessInfo processInfo] performSelector:@selector(disableSuddenTermination)];
+	
 	BOOL userWantsToBoot64Bit = ([_switcherMatrix selectedRow] == 1);
 	BOOL userIsBooting64Bit = [self willBoot64Bit];
 	
@@ -91,6 +94,8 @@
 			//[_switcherMatrix selectCellAtRow:(userWantsToBoot64Bit ? 0 : 1) column:0];
 		}
 	}
+	if ([[NSProcessInfo processInfo] respondsToSelector:@selector(enableSuddenTermination)])	// ok, turn it back on
+		[[NSProcessInfo processInfo] performSelector:@selector(enableSuddenTermination)];
 }
 
 
@@ -222,6 +227,7 @@
 {
 	NSPipe *pipe = [NSPipe pipe];
 	NSTask *task = [[[NSTask alloc] init] autorelease];
+	NSData *output;
 	
 	NSAssert(pipe, @"Looks like we're out of pipes. Oh no!");
 	
@@ -229,9 +235,10 @@
 	[task setArguments:arguments];
 	[task setStandardOutput:pipe];
 	[task launch];
+	output = [[pipe fileHandleForReading] readDataToEndOfFile];
 	[task waitUntilExit];
 	
-	return [[pipe fileHandleForReading] readDataToEndOfFile];
+	return output;
 }
 
 
