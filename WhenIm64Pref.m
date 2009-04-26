@@ -14,6 +14,7 @@
 - (BOOL)cpuCanBoot64Bit;
 - (BOOL)kernelHas32BitVersion;
 - (BOOL)kernelHas64BitVersion;
+- (BOOL)isComputerProbablySupportedBy64BitKernel;
 - (BOOL)isRunning64Bit;
 - (NSDictionary *)nvram;
 - (NSData *)outputOfTaskWithLaunchPath:(NSString *)launchPath arguments:(NSArray *)arguments;
@@ -129,7 +130,7 @@
 	[_switcherMatrix setEnabled:YES];
 	if ([self kernelHas32BitVersion] == NO)
 		[[_switcherMatrix cellAtRow:0 column:0] setEnabled:NO];
-	if ([self cpuCanBoot64Bit] == NO || [self kernelHas64BitVersion] == NO)
+	if ([self cpuCanBoot64Bit] == NO || [self kernelHas64BitVersion] == NO || [self isComputerProbablySupportedBy64BitKernel] == NO)
 		[[_switcherMatrix cellAtRow:1 column:0] setEnabled:NO];
 }
 
@@ -172,6 +173,58 @@
 	
 	if (resultsStr && [resultsStr rangeOfString:@"x86_64"].location != NSNotFound)
 		return YES;
+	return NO;
+}
+
+
+- (BOOL)isComputerProbablySupportedBy64BitKernel
+{
+	size_t len;
+	char *results;
+	
+	if (sysctlbyname("hw.model", NULL, &len, NULL, 0L) == 0)
+	{
+		results = malloc(len*sizeof(char));
+		if (sysctlbyname("hw.model", results, &len, NULL, 0L) == 0)
+		{
+			NSString *hwModel = [NSString stringWithCString:results encoding:NSASCIIStringEncoding];
+			
+			// Here's how we're going to do this:
+			// Apple doesn't support booting the 64-bit kernel on their non-pro computers, and also doesn't support booting it on some older computers.
+			// So we look for the 64-bit-capable computers that Apple says doesn't work, and return NO for them.
+			// If it's not on the list, then return YES.
+			// There are a number of 32-bit-only Macs for which this method will return YES, so don't rely on this method entirely...
+			
+			if ([hwModel hasPrefix:@"Macmini"])	// the documentation says Mac minis aren't supported at all
+				return NO;
+			else if ([hwModel hasPrefix:@"MacBook"])
+			{
+				if ([hwModel rangeOfString:@"MacBookPro"].location == NSNotFound)	// non-Pro MacBooks aren't supported
+					return NO;
+				else if ([hwModel hasSuffix:@"2,1"] || [hwModel hasSuffix:@"2,2"] || [hwModel hasSuffix:@"3,1"])	// the second and third edition MBPs aren't supported
+					return NO;
+			}
+			else if ([hwModel hasPrefix:@"iMac"])	// certain older iMac models aren't supported
+			{
+				if ([hwModel hasSuffix:@"5,1"] || [hwModel hasSuffix:@"5,2"] || [hwModel hasSuffix:@"6,1"] || [hwModel hasSuffix:@"7,1"])
+					return NO;
+			}
+			else if ([hwModel hasPrefix:@"MacPro"])	// the first two Pro models aren't supported
+			{
+				if ([hwModel hasSuffix:@"1,1"] || [hwModel hasSuffix:@"2,1"])
+					return NO;
+			}
+			else if ([hwModel hasPrefix:@"Xserve"])	// the very first Intel-based Xserve supposedly isn't supported
+			{
+				if ([hwModel hasSuffix:@"1,1"])
+					return NO;
+			}
+			
+			free(results);
+			return YES;
+		}
+		free(results);
+	}
 	return NO;
 }
 
