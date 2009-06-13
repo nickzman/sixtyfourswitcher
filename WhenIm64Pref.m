@@ -11,7 +11,7 @@
 #import <sys/sysctl.h>
 
 @interface WhenIm64Pref (Internal)
-- (BOOL)cpuCanBoot64Bit;
+- (BOOL)cpuSupports64Bit;
 - (BOOL)kernelHas32BitVersion;
 - (BOOL)kernelHas64BitVersion;
 - (BOOL)isComputerProbablySupportedBy64BitKernel;
@@ -127,11 +127,36 @@
 
 - (void)authorizationViewDidAuthorize:(SFAuthorizationView *)view
 {
+	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+	
 	[_switcherMatrix setEnabled:YES];
-	if ([self kernelHas32BitVersion] == NO)
+	if (![self kernelHas32BitVersion])
 		[[_switcherMatrix cellAtRow:0 column:0] setEnabled:NO];
-	if ([self cpuCanBoot64Bit] == NO || [self kernelHas64BitVersion] == NO || [self isComputerProbablySupportedBy64BitKernel] == NO)
+	
+	if (![self cpuSupports64Bit])
+	{
+		[_rebootWarningTxt setStringValue:NSLocalizedStringFromTableInBundle(@"Your computer\\U2019s CPU does not support 64-bit addressing.", @"WhenIm64Pref", bundle, @"Not supported because the Mac has a 32-bit CPU")];
+		[_rebootWarningTxt setHidden:NO];
 		[[_switcherMatrix cellAtRow:1 column:0] setEnabled:NO];
+	}
+	else if (![self kernelHas64BitVersion])
+	{
+		SInt32 osVersion;
+		
+		Gestalt(gestaltSystemVersion, &osVersion);
+		if (osVersion < 0x1060)
+			[_rebootWarningTxt setStringValue:NSLocalizedStringFromTableInBundle(@"Sorry, but this preference pane requires Snow Leopard or later.", @"WhenIm64Pref", bundle, @"Not supported because Leopard didn't have a 64-bit kernel")];
+		else
+			[_rebootWarningTxt setStringValue:NSLocalizedStringFromTableInBundle(@"For some reason, your OS install lacks a 64-bit kernel. Try reinstalling the OS.", @"WhenIm64Pref", bundle, @"Not supported because the 64-bit kernel wasn't found")];
+		[_rebootWarningTxt setHidden:NO];
+		[[_switcherMatrix cellAtRow:1 column:0] setEnabled:NO];
+	}
+	else if (![self isComputerProbablySupportedBy64BitKernel])
+	{
+		[_rebootWarningTxt setStringValue:NSLocalizedStringFromTableInBundle(@"Your Mac model does not support booting the 64-bit kernel.", @"WhenIm64Pref", bundle, @"Not supported because the computer isn't on the whitelist")];
+		[_rebootWarningTxt setHidden:NO];
+		[[_switcherMatrix cellAtRow:1 column:0] setEnabled:NO];
+	}
 }
 
 
@@ -144,7 +169,7 @@
 
 @implementation WhenIm64Pref (Internal)
 
-- (BOOL)cpuCanBoot64Bit
+- (BOOL)cpuSupports64Bit
 {
 	size_t len = sizeof(int);
 	int results;
