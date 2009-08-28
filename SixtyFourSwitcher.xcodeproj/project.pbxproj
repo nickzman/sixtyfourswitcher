@@ -299,11 +299,13 @@
 					i386,
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
+				"GCC_VERSION[arch=i386]" = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				"MACOSX_DEPLOYMENT_TARGET[arch=i386]" = 10.4;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.6;
 			};
 			name = Debug;
 		};
@@ -316,10 +318,12 @@
 					i386,
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
+				"GCC_VERSION[arch=i386]" = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				"MACOSX_DEPLOYMENT_TARGET[arch=i386]" = 10.4;
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.6;
 			};
 			name = Release;
 		};
