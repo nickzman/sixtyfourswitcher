@@ -364,7 +364,7 @@
 			return NO;
 	}
 	// Then, check the NVRAM to see if this setting is different from the computer's default:
-	else if ([nvram objectForKey:@"boot-args"])
+	if ([nvram objectForKey:@"boot-args"])
 	{
 		if ([[nvram objectForKey:@"boot-args"] rangeOfString:@"arch=i386"].location != NSNotFound)
 			return NO;
