@@ -353,8 +353,18 @@
 {
 	NSDictionary *nvram = [self nvram];
 	
-	// First, check the NVRAM to see if this setting is different from the computer's default:
-	if ([nvram objectForKey:@"boot-args"])
+	// First, check com.apple.Boot. In Snow Leopard, this plist trumps NVRAM settings.
+	if ([[NSFileManager defaultManager] fileExistsAtPath:@"/Library/Preferences/SystemConfiguration/com.apple.Boot.plist"])
+	{
+		NSDictionary *bootDict = [NSDictionary dictionaryWithContentsOfFile:@"/Library/Preferences/SystemConfiguration/com.apple.Boot.plist"];
+		
+		if ([[bootDict objectForKey:@"Kernel Architecture"] isEqualToString:@"x86_64"])
+			return YES;
+		else if ([[bootDict objectForKey:@"Kernel Architecture"] isEqualToString:@"i386"])
+			return NO;
+	}
+	// Then, check the NVRAM to see if this setting is different from the computer's default:
+	else if ([nvram objectForKey:@"boot-args"])
 	{
 		if ([[nvram objectForKey:@"boot-args"] rangeOfString:@"arch=i386"].location != NSNotFound)
 			return NO;
