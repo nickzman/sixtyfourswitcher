@@ -96,7 +96,18 @@
 		}
 		wait(&childPID);	// bring out your dead!
 		if (err == noErr)
+		{
 			[_rebootWarningTxt setHidden:NO];
+			// If the user previously used systemsetup or some third-party startup selector that modifies the boot plist, then that will conflict with our work.
+			// So if systemsetup is present, let's use it to set this back to its default value in order to remove the conflict...
+			if ([[NSFileManager defaultManager] fileExistsAtPath:@"/usr/sbin/systemsetup"])
+			{
+				char * const defaultKernelBootArchArgs[] = {"-setkernelbootarchitecture", "default", NULL};
+				
+				err = AuthorizationExecuteWithPrivileges([authorization authorizationRef], "/usr/sbin/systemsetup", kAuthorizationFlagDefaults, defaultKernelBootArchArgs, NULL);
+				wait(&childPID);
+			}
+		}
 		else	// if there was a problem, then reset the radio back to the way it was
 		{
 			[[NSRunLoop currentRunLoop] performSelector:@selector(switchBack:) target:self argument:[NSNumber numberWithInteger:(userWantsToBoot64Bit ? 0 : 1)] order:0 modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
@@ -161,7 +172,7 @@
 	}
 	else if (![self isComputerProbablySupportedBy64BitKernel])
 	{
-		[_rebootWarningTxt setStringValue:NSLocalizedStringFromTableInBundle(@"Your Mac model does not support booting the 64-bit kernel.", @"WhenIm64Pref", bundle, @"Not supported because the computer isn't on the whitelist")];
+		[_rebootWarningTxt setStringValue:NSLocalizedStringFromTableInBundle(@"Your Mac model has a 64-bit CPU, but it does not support booting the 64-bit kernel.", @"WhenIm64Pref", bundle, @"Not supported because the computer isn't on the whitelist")];
 		[_rebootWarningTxt setHidden:NO];
 		[[_switcherMatrix cellAtRow:1 column:0] setEnabled:NO];
 	}
