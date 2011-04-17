@@ -177,7 +177,11 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DBD214C08BA80EA00186707 /* Build configuration list for PBXProject "SixtyFourSwitcher" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 089C166AFE841209C02AAC07 /* WhenIm64 */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -256,19 +260,16 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				"GCC_ENABLE_OBJC_GC[arch=x86_64]" = supported;
-				GCC_MODEL_TUNING = G5;
+				GCC_ENABLE_OBJC_GC = supported;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WhenIm64_Prefix.pch;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/PreferencePanes";
-				"MACOSX_DEPLOYMENT_TARGET[arch=i386]" = 10.4;
 				PRODUCT_NAME = SixtyFourSwitcher;
 				WARNING_CFLAGS = "-Wmost";
 				WRAPPER_EXTENSION = prefPane;
-				ZERO_LINK = YES;
 			};
 			name = Debug;
 		};
@@ -276,14 +277,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				"GCC_ENABLE_OBJC_GC[arch=x86_64]" = supported;
-				GCC_MODEL_TUNING = G5;
+				GCC_ENABLE_OBJC_GC = supported;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WhenIm64_Prefix.pch;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/PreferencePanes";
-				"MACOSX_DEPLOYMENT_TARGET[arch=i386]" = 10.4;
 				PRODUCT_NAME = SixtyFourSwitcher;
 				WARNING_CFLAGS = "-Wmost";
 				WRAPPER_EXTENSION = prefPane;
@@ -293,18 +292,11 @@
 		1DBD214D08BA80EA00186707 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = i386;
-				"ARCHS[sdk=macosx10.6]" = (
-					x86_64,
-					i386,
-				);
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
-				"GCC_VERSION[arch=i386]" = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				"MACOSX_DEPLOYMENT_TARGET[arch=i386]" = 10.4;
 				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 			};
 			name = Debug;
@@ -312,17 +304,10 @@
 		1DBD214E08BA80EA00186707 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = i386;
-				"ARCHS[sdk=macosx10.6]" = (
-					x86_64,
-					i386,
-				);
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
-				"GCC_VERSION[arch=i386]" = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				"MACOSX_DEPLOYMENT_TARGET[arch=i386]" = 10.4;
-				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 			};
 			name = Release;

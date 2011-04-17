@@ -17,20 +17,20 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1</string>
+	<string>1.2</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.1</string>
+	<string>1.2</string>
 	<key>NSMainNibFile</key>
 	<string>WhenIm64Pref</string>
-	<key>NSSupportsSuddenTermination</key>
-	<true/>
 	<key>NSPrefPaneIconFile</key>
 	<string>WhenIm64Pref.tiff</string>
 	<key>NSPrefPaneIconLabel</key>
 	<string>SixtyFour Switcher</string>
 	<key>NSPrincipalClass</key>
 	<string>WhenIm64Pref</string>
+	<key>NSSupportsSuddenTermination</key>
+	<true/>
 </dict>
 </plist>
