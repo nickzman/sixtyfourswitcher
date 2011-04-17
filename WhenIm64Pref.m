@@ -239,8 +239,11 @@
 			// If it's not on the list, then return YES.
 			// There are a number of 32-bit-only Macs for which this method will return YES, so don't rely on this method entirely...
 			
-			if ([hwModel hasPrefix:@"Macmini"])	// the documentation says Mac minis aren't supported at all
-				return NO;
+			if ([hwModel hasPrefix:@"Macmini"])	// Mac minis are supported from the 4th generation onwards
+			{
+				if ([hwModel hasSuffix:@"1,1"] || [hwModel hasSuffix:@"2,1"] || [hwModel hasSuffix:@"3,1"])
+					return NO;
+			}
 			else if ([hwModel hasPrefix:@"MacBook"])
 			{
 				if ([hwModel rangeOfString:@"MacBookPro"].location == NSNotFound)	// non-Pro MacBooks aren't supported
@@ -299,23 +302,11 @@
 {
 	NSData *results = [self outputOfTaskWithLaunchPath:@"/usr/sbin/nvram" arguments:[NSArray arrayWithObject:@"-xp"]];
 	NSDictionary *returnValue;
-	
-#ifdef __LP64__
 	NSError *err = nil;
 	
 	returnValue = [NSPropertyListSerialization propertyListWithData:results options:NSPropertyListImmutable format:NULL error:&err];
 	if (returnValue == nil && err)
 		NSLog(@"Couldn't read nvram property list (64-bit): %@", err);
-#else
-	NSString *err = nil;
-	
-	returnValue = [NSPropertyListSerialization propertyListFromData:results mutabilityOption:NSPropertyListImmutable format:NULL errorDescription:&err];
-	if (returnValue == nil && err)
-	{
-		NSLog(@"Couldn't read nvram property list (32-bit): %@", err);
-		[err release];	// the documentation says we have to do this, oddly enough
-	}
-#endif
 	return returnValue;
 }
 
