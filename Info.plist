@@ -22,6 +22,8 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.2</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.6.0</string>
 	<key>NSMainNibFile</key>
 	<string>WhenIm64Pref</string>
 	<key>NSPrefPaneIconFile</key>
