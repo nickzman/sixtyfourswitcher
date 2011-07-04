@@ -232,6 +232,9 @@
 		if (sysctlbyname("hw.model", results, &len, NULL, 0L) == 0)
 		{
 			NSString *hwModel = [NSString stringWithCString:results encoding:NSASCIIStringEncoding];
+			SInt32 osVersion;
+			
+			Gestalt(gestaltSystemVersion, &osVersion);	// Lion & later add support for some older Mac models that weren't supported by Snow Leopard
 			
 			// Here's how we're going to do this:
 			// Apple doesn't support booting the 64-bit kernel on their non-pro computers, and also doesn't support booting it on some older computers.
@@ -241,19 +244,27 @@
 			
 			if ([hwModel hasPrefix:@"Macmini"])	// Mac minis are supported from the 4th generation onwards
 			{
-				if ([hwModel hasSuffix:@"1,1"] || [hwModel hasSuffix:@"2,1"] || [hwModel hasSuffix:@"3,1"])
+				if ([hwModel hasSuffix:@"1,1"] || [hwModel hasSuffix:@"2,1"] || (osVersion < 0x1070 && [hwModel hasSuffix:@"3,1"]))
 					return NO;
 			}
 			else if ([hwModel hasPrefix:@"MacBook"])
 			{
-				if ([hwModel rangeOfString:@"MacBookPro"].location == NSNotFound)	// non-Pro MacBooks aren't supported
-					return NO;
-				else if ([hwModel hasSuffix:@"2,1"] || [hwModel hasSuffix:@"2,2"] || [hwModel hasSuffix:@"3,1"])	// the second and third edition MBPs aren't supported
+				if ([hwModel hasPrefix:@"MacBookAir"])	// MacBook Air: versions 2,1 and later support the kernel, but only under Lion & later
+				{
+					if (osVersion < 0x1070 || [hwModel hasSuffix:@"1,1"])
+						return NO;
+				}
+				else if ([hwModel rangeOfString:@"MacBookPro"].location == NSNotFound)	// MacBook: versions 5,1 and later support the kernel, but only under Lion & later
+				{
+					if (osVersion < 0x1070 || [hwModel hasSuffix:@"1,1"] || [hwModel hasSuffix:@"2,1"] || [hwModel hasSuffix:@"3,1"] || [hwModel hasSuffix:@"4,1"])
+						return NO;
+				}
+				else if ([hwModel hasSuffix:@"2,1"] || [hwModel hasSuffix:@"2,2"] || (osVersion < 0x1070 && [hwModel hasSuffix:@"3,1"]))	// the second edition MBP isn't supported, the third is but only under Lion & later
 					return NO;
 			}
 			else if ([hwModel hasPrefix:@"iMac"])	// certain older iMac models aren't supported
 			{
-				if ([hwModel hasSuffix:@"5,1"] || [hwModel hasSuffix:@"5,2"] || [hwModel hasSuffix:@"6,1"] || [hwModel hasSuffix:@"7,1"])
+				if ([hwModel hasSuffix:@"5,1"] || [hwModel hasSuffix:@"5,2"] || [hwModel hasSuffix:@"6,1"] || (osVersion < 0x1070 && [hwModel hasSuffix:@"7,1"]))
 					return NO;
 			}
 			else if ([hwModel hasPrefix:@"MacPro"])	// the first two Pro models aren't supported
