@@ -2,6 +2,8 @@
 build/*
 *.mode*
 *.pbxuser
+*.xcworkspace
+xcuserdata
 
 # Ignore Finder stuff:
 .DS_Store
