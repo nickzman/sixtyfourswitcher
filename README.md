@@ -1,0 +1,1 @@
+Important! This preference pane is obsolete, and doesn't do anything in any OS X release after OS X 10.8 (Mountain Lion). This repository exists for historical reasons only, and no plans are made for future releases.
